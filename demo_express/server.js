@@ -1,6 +1,7 @@
 const express = require("express");
 const cowsay = require('cowsay2');
-const owl = require('cowsay2/cows/owl')
+const owl = require('cowsay2/cows/owl');
+const pokemon = require('./utils/pokemon');
 
 const app = express();
 const port = 3000;
@@ -14,7 +15,10 @@ app.get("/", (req, res) => {
 app.get("/weather", (req, res) => {
   res.status(200).send("Aquí va el tiempo!");
 });
-
+// Query params:
+// http://localhost:3000/books/quijote
+// http://localhost:3000/books/
+// http://localhost:3000/books/celestina
 app.get("/books/:title?", (req, res) => {
 
     console.log(req.params.title);
@@ -86,6 +90,22 @@ app.put("/books", (req, res) => {
 });
 app.delete("/books/:title?", (req, res) => {
     res.status(200).send("Libro borrado!");
+});
+
+// http://localhost:3000/pokemon --> Todos los pokemon
+//Query string:
+//http://localhost:3000/pokemon?name=pikachu&age=25&color=red --> Me devuelve pikachu
+//http://localhost:3000/pokemon?name=pikachu --> Me devuelve pikachu
+app.get("/pokemon", async (req, res) => {
+  console.log(req.query.name);
+
+  if(req.query.name){
+    const data = await pokemon.getPokemonWithClassicPromises(req.query.name);
+      res.status(200).json({msj:"Te doy 1 pokemon", data});
+  }else{
+      const data = await pokemon.getPokemonWithAsyncAwait();
+      res.status(200).json({msj:"Te doy todos los pokemon que tengo",data});
+  }
 });
 
 app.listen(port, () => {
