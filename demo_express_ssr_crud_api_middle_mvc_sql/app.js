@@ -2,6 +2,7 @@ const express = require('express')
 const cowsay = require('cowsay')
 
 const calculator = require('./utils/calculator')
+const morgan = require('./utils/morgan')
 const error404 = require('./middlewares/error404')
 
 // Módulos de Rutas
@@ -20,6 +21,9 @@ app.set('views', './views');
 // Middlewares
 app.use(express.json()); // Habilitar tipo de dato a recibir
 app.use(express.urlencoded({ extended: true }));
+// Logger
+app.use(morgan(':method :host :status :param[id] - :response-time ms :body'));
+//Public folder
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
