@@ -62,12 +62,30 @@ const createEntry = async (entry) => {
 // DELETE 
 //UPDATE
 
+const updateEntry = async (entry) => {
+    const { title, new_title, content, email, category } = entry;
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(queries.updateEntry,[new_title, content, email, category,title]);
+        result = data.rowCount
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
+
+
 const entries = {
     getEntriesByEmail,
     getAllEntries,
     createEntry,
+    updateEntry
     //deleteEntry
-    //updateEntry
+    
 }
 
 module.exports = entries;
@@ -96,3 +114,17 @@ createEntry(newEntry)
     .then(data => console.log(data))
     
 */
+
+// UPDATE
+/*
+let dataUpdateEntry = {
+    title: "Se suspende Primavera Sound",
+    new_title:"Se suspende Primavera Sound por lluvia",
+    content: "Se enfanga todo y Blur se fue a la Riviera. Pet Shop Boys lo petó",
+    email: "javi@gmail.com",
+    category: "conciertos"
+}
+
+updateEntry(dataUpdateEntry)
+    .then(data => console.log(data))
+    */

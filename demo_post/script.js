@@ -30,7 +30,6 @@ document.getElementById("form_product").addEventListener("submit",(event) => {
     event.preventDefault();
 
     const title = event.target.product_name.value;
-
     const price = event.target.price.value;
 
     console.warn(title,price);
