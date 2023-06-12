@@ -1,9 +1,9 @@
 const { Pool } = require('pg')
-const pool = new Pool({
+const pool = new Pool({ // Conexión con base de datos con estas credenciales
   host: 'localhost',
   user: 'postgres',
   database: 'postgres',
-  password: '1234'
+  password: '123456'
 })
 
 

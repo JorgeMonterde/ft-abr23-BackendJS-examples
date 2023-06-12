@@ -75,14 +75,14 @@ module.exports = entries;
 
 // Pruebas
 /*
-    getEntriesByEmail("birja@thebridgeschool.es")
-    .then(data=>console.log(data))
-*/
-
-/*
-getAllEntries()
+getEntriesByEmail("birja@thebridgeschool.es")
 .then(data=>console.log(data))
 */
+
+
+getAllEntries()
+.then(data=>console.log(data))
+
 
 /*
 let newEntry = {
@@ -94,5 +94,5 @@ let newEntry = {
 
 createEntry(newEntry)
     .then(data => console.log(data))
-    */
+*/
 

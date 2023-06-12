@@ -10,3 +10,5 @@ PG_PASSWORD=
 2. Execute the queries that you can find in `queries.sql`
 
 3. After that, your project is ready to use!
+
+

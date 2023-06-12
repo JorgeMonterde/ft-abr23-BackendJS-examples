@@ -1,6 +1,8 @@
 const express = require('express')
 const cowsay = require('cowsay')
 
+require("./utils/db_mongo") // Conexion a BBDD mongo DB
+
 const calculator = require('./utils/calculator')
 const morgan = require('./utils/morgan')
 const error404 = require('./middlewares/error404')
@@ -9,7 +11,7 @@ const error404 = require('./middlewares/error404')
 const booksRoutes = require('./routes/booksRoutes')
 const productsRoutes = require('./routes/productsRoutes')
 const productsApiRoutes = require('./routes/productsApiRoutes')
-const entriesApiRoutes = require('./routes/entriesApiRoutes')
+// const entriesApiRoutes = require('./routes/entriesApiRoutes')
 
 const app = express()
 const port = 3000
@@ -36,7 +38,7 @@ app.get('/', (req, res) => {
 app.use('/books',booksRoutes); // Books
 app.use('/products',productsRoutes); // Rutas web products
 app.use('/api/products',productsApiRoutes); // Rutas web API products
-app.use('/api/entries',entriesApiRoutes); // Rutas API entries
+//app.use('/api/entries',entriesApiRoutes); // Rutas API entries
 app.use(error404); // Middleware Para ruta no encontrada (404)
 
 app.listen(port, () => {
