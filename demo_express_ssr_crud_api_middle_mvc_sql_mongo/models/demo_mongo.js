@@ -3,7 +3,7 @@ var url = "mongodb://localhost:27017/";
 
 MongoClient.connect(url, function(err, db) {
   if (err) throw err;
-  var dbo = db.db("probando");
+  var dbo = db.db("local");
   var myobj = [
     { name: 'John', address: 'Highway 71'},
     { name: 'Peter', address: 'Lowstreet 4'},
@@ -20,9 +20,15 @@ MongoClient.connect(url, function(err, db) {
     { name: 'Chuck', address: 'Main Road 989'},
     { name: 'Viola', address: 'Sideway 1633'}
   ];
-  dbo.collection("customers").insertMany(myobj, function(err, res) {
+/*   dbo.collection("customers").insertMany(myobj, function(err, res) {
     if (err) throw err;
     console.log("Number of documents inserted: " + res.insertedCount);
+    db.close();
+  }); */
+
+  dbo.collection("customers").updateMany({name:/^S/},{$set:{name:"Silvia"}}, function(err, res) {
+    if (err) throw err;
+    console.log("Número de documentos actualizados: " + res.modifiedCount);
     db.close();
   });
 });

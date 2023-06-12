@@ -1,29 +1,24 @@
 // Controlador - Lógica de negocio de la app
 const fetch = require('node-fetch');
-const Product = require('../models/products'); // Modelo BBDD Mongo
 
 const getProducts = async (req,res) => {
     if (req.params.id) { // con ID
         try {
-            let products = await Product.find({id:req.params.id},'-_id -__v'); //[{}]
-            res.status(200).json(products[0]); // Respuesta de la API para 1 producto {}
+            let response = await fetch(`https://fakestoreapi.com/products/${req.params.id}`); //{}
+            let products = await response.json(); //{}
+            res.status(200).json(products); // Respuesta de la API para 1 producto
         }
         catch (error) {
             console.log(`ERROR: ${error.stack}`);
-            res.status(400).json({
-                msj: `ERROR: ${error}`
-            });
         }
     } else { // sin ID --> TODOS los products
         try {
-            let products = await Product.find({},'-_id -__v'); // []
+            let response = await fetch(`https://fakestoreapi.com/products`); // []
+            let products = await response.json(); // []
             res.status(200).json(products); // Respuesta de la API para muchos productos
         }
         catch (error) {
             console.log(`ERROR: ${error.stack}`);
-            res.status(400).json({
-                msj: `ERROR: ${error}`
-            });
         }
     }
 }
@@ -35,24 +30,22 @@ const createProduct = async (req,res) => {
     // Líneas
     // para guardar 
     // en una BBDD SQL o MongoDB
-    try {
-        let response = await new Product(newProduct); // objeto de vuelta de la petición
-        let answer = await response.save(); // Guardar en la BBDD
-    
-        console.log("Este es el console.log de lo que devuelve la api", answer);
-    
-        res.status(201).json({
-            msj: `Producto ${answer.title} guardado en el sistema con ID: ${answer.id}`,
-            "product": answer
-        });
-    }        
-    
-    catch (error) {
-        console.log(`ERROR: ${error}`);
-        res.status(400).json({
-            msj: `ERROR: ${error}`
-        });
-    }
+
+    let response = await fetch('https://fakestoreapi.com/products', {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newProduct)
+    })
+    let answer = await response.json(); // objeto de vuelta de la petición
+    console.log("Este es el console.log de lo que devuelve la api", answer);
+
+    res.status(201).json({
+        msj: `Producto ${answer.title} guardado en el sistema con ID: ${answer.id}`,
+        "product": answer
+    });
 }
 
 const deleteProduct = async (req,res)=>{

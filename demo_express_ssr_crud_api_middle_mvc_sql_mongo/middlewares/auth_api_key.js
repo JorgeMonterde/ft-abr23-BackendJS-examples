@@ -1,4 +1,4 @@
-//http://localhost:3000/products?API_KEY="12354djd"
+//http://localhost:3000/products?API_KEY=123abc
 
 const checkApiKey = function (req, res, next) {
     // Comprobar si existe API KEY en BBDD

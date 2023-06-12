@@ -1,6 +1,8 @@
 const express = require('express')
 const cowsay = require('cowsay')
 
+require('./utils/db_mongo') // Conexión a BBDD MongoDB
+
 const calculator = require('./utils/calculator')
 const morgan = require('./utils/morgan')
 const error404 = require('./middlewares/error404')
